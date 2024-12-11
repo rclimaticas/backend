@@ -7,6 +7,7 @@ exports.router = void 0;
 const express_1 = require("express");
 const user_register_controller_1 = require("./controllers/user/user-register.controller");
 const user_login_controller_1 = require("./controllers/user/user-login.controller");
+const user_logout_controller_1 = require("./controllers/user/user-logout.controller");
 const auth_1 = require("./middlewares/auth");
 const multer_1 = __importDefault(require("multer"));
 const prisma_1 = require("./utils/prisma");
@@ -21,6 +22,7 @@ const profile_get_controller_1 = require("./controllers/user/profile/profile.get
 const profile_delete_controller_1 = require("./controllers/user/profile/profile.delete.controller");
 const impacts_create_controller_1 = require("./controllers/impactos/impacts.create.controller");
 const impacts_list_controller_1 = require("./controllers/impactos/impacts.list.controller");
+const impactis_list_global_controller_1 = require("./controllers/impactos/impactis.list-global.controller");
 const newsletter_create_controller_1 = require("./controllers/newsletter/newsletter.create.controller");
 const news_scrape_controller_1 = require("./controllers/webscraping/news-scrape.controller");
 // Multer configuration
@@ -28,6 +30,7 @@ const upload = (0, multer_1.default)();
 // User controllers
 const registerController = new user_register_controller_1.UserRegisterController();
 const loginController = new user_login_controller_1.UserLoginController();
+const logoutController = new user_logout_controller_1.UserLogoutController();
 // Material controllers
 const materialController = new material_create_controller_1.MaterialCreateController();
 const materialGetController = new material_get_controller_1.MaterialGetController();
@@ -40,6 +43,7 @@ const profileDeleteController = new profile_delete_controller_1.ProfileDeleteCon
 // Impacts controllers
 const impactsCreateController = new impacts_create_controller_1.ImpactsCreateController();
 const impactsListController = new impacts_list_controller_1.ImpactsListController();
+const impactsListGlobalController = new impactis_list_global_controller_1.ImpactsListGlobalController();
 // Newsletter controllers
 const newsletterCreateController = new newsletter_create_controller_1.NewsletterCreateController();
 // Webscraping controlles
@@ -48,9 +52,8 @@ exports.router = (0, express_1.Router)();
 // User routes
 exports.router.post("/register", registerController.store);
 exports.router.post("/login", loginController.authenticate);
-// Helper to get current directory in CommonJS
+exports.router.post("/logout", logoutController.logout);
 const __dirname = path_1.default.resolve();
-// Material routes
 exports.router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo enviado');
@@ -87,12 +90,13 @@ exports.router.delete("/materials/:materialId", auth_1.AuthMiddleware, materialD
 exports.router.get("/materials", materialGetController.list);
 // Profile routes
 exports.router.put("/profile/:id", auth_1.AuthMiddleware, profileUpdateController.update);
-exports.router.get("/profile/:id", auth_1.AuthMiddleware, profileGetController.show);
-exports.router.get("/profile", auth_1.AuthMiddleware, profileGetController.index);
+exports.router.get("/profile/:id", auth_1.AuthMiddleware, profileGetController.index);
+exports.router.get("/profile", profileGetController.index);
 exports.router.delete("/profile/:id", auth_1.AuthMiddleware, profileDeleteController.delete);
 // Impacts routes
 exports.router.post("/impacts", auth_1.AuthMiddleware, impactsCreateController.store);
 exports.router.get("/impacts/user/:userId", auth_1.AuthMiddleware, impactsListController.index);
+exports.router.get("/impacts", impactsListGlobalController.index);
 // Newsletter routes
 exports.router.post("/newsletter", newsletterCreateController.store);
 // News scraping route

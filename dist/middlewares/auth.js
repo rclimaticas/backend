@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthMiddleware = void 0;
+exports.AuthMiddleware = AuthMiddleware;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function AuthMiddleware(req, res, next) {
     const { authorization } = req.headers;
@@ -21,4 +21,3 @@ function AuthMiddleware(req, res, next) {
         return res.status(401).json({ error: "token invalido" });
     }
 }
-exports.AuthMiddleware = AuthMiddleware;
