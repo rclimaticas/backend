@@ -21,7 +21,7 @@ export function AuthMiddleware(
     const [, token] = authorization.split(" ");
 
     try {
-        const secret = process.env.SECRET_KEY;
+        const secret = "aFJlZXRGaWxl";;
         if (!secret) {
             throw new Error("SECRET_KEY não está definido");
         }
