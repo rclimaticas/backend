@@ -4,7 +4,7 @@ import { prisma } from "../../utils/prisma";
 export class MaterialUpdateController {
     async update(req: Request, res: Response) {
         const materialId = parseInt(req.params.id);
-        const { name, email, publicationType, subjectType, fileUrl, fileUpload } = req.body;
+        const { name, email, publicationType, subjectType, fileUrl, FileUpload } = req.body;
         try {
             const updatedMaterial = await prisma.material.update({
                 where: { id: materialId },
@@ -14,7 +14,7 @@ export class MaterialUpdateController {
                     publicationType,
                     subjectType,
                     fileUrl,
-                    fileUpload
+                    FileUpload
                 },
             });
             res.json(updatedMaterial);
