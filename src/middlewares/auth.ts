@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
+import * as jwt from "jsonwebtoken";
 
 type TokenPayload = {
     id: string;
@@ -14,21 +12,30 @@ export function AuthMiddleware(
     res: Response,
     next: NextFunction
 ) {
-    const { authorization } = req.headers; 
+    const { authorization } = req.headers;
 
     if (!authorization) {
         return res.status(401).json({ error: "token nao fornecido" });
     }
 
-    const [, token]= authorization.split(" ");
+    const [, token] = authorization.split(" ");
 
     try {
-        const decoded = jwt.verify(token, "my_secret");
-        const { id } = decoded as TokenPayload;
+        const secret = "aFJlZXRGaWxl";;
+        if (!secret) {
+            throw new Error("SECRET_KEY não está definido");
+        }
 
-        req.userId = id;
+        const decoded = jwt.verify(token, secret) as TokenPayload;
+
+        if (!decoded || !decoded.id) {
+            throw new Error("Token inválido: id não encontrado");
+        }
+
+        req.userId = decoded.id;
         next();
     } catch (error) {
+        console.error("Erro ao verificar o token:", error);
         return res.status(401).json({ error: "token invalido" });
     }
 }
