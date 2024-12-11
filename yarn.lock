@@ -1702,12 +1702,6 @@ node-fetch@~2.6.1:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-word2vec@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/node-word2vec/-/node-word2vec-0.0.8.tgz"
-  integrity sha512-nYsoPwS9qWjSbakxOeXVZhLA1QXyM5h8ax9VgE7H3fKtm7J60D5tcqcH8CmA97fdB8hA9XpeN4N2vRbisocMbQ==
-  dependencies:
-    "@types/node" "^8.0.30"
 
 nodemailer@^6.9.14:
   version "6.9.16"
@@ -2365,15 +2359,6 @@ wide-align@^1.1.2:
   dependencies:
     string-width "^1.0.2 || 2 || 3 || 4"
 
-word2vec@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.npmjs.org/word2vec/-/word2vec-1.1.5.tgz"
-  integrity sha512-J/aXhDu+8cwhTQMD1lESuQo2eBpXMDU7e8gEr6hM6Fh7hnyAF3H12Nxao5r7X+tkox6PM4Tq0AXQ/S5Y3ExPzg==
-  dependencies:
-    change-case "^4.1.2"
-    charm "^1.0.0"
-    mime "^2.4.0"
-    underscore "^1.7.0"
 
 wrap-ansi@^7.0.0:
   version "7.0.0"

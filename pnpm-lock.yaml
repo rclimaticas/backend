@@ -47,9 +47,6 @@ importers:
       url:
         specifier: ^0.11.4
         version: 0.11.4
-      word2vec:
-        specifier: ^1.1.5
-        version: 1.1.5
       yarn:
         specifier: ^1.22.22
         version: 1.22.22
@@ -1411,9 +1408,6 @@ packages:
 
   wide-align@1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
-
-  word2vec@1.1.5:
-    resolution: {integrity: sha512-J/aXhDu+8cwhTQMD1lESuQo2eBpXMDU7e8gEr6hM6Fh7hnyAF3H12Nxao5r7X+tkox6PM4Tq0AXQ/S5Y3ExPzg==}
 
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
@@ -2903,13 +2897,6 @@ snapshots:
   wide-align@1.1.5:
     dependencies:
       string-width: 4.2.3
-
-  word2vec@1.1.5:
-    dependencies:
-      change-case: 4.1.2
-      charm: 1.0.2
-      mime: 2.6.0
-      underscore: 1.13.7
 
   wrap-ansi@7.0.0:
     dependencies:
