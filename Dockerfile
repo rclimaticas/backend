@@ -16,13 +16,14 @@ WORKDIR /app
 # Copie os arquivos de dependências do projeto para o contêiner
 COPY package.json pnpm-lock.yaml ./
 
-# Instale as dependências do projeto usando pnpm
-RUN pnpm install --no-frozen-lockfile || { \
-    cd node_modules/node-word2vec && \
-    gcc -lm src/word2vec.c -o bin/word2vec -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result && \
-    cd ../../ && \
-    pnpm install --no-frozen-lockfile; \
-}
+# Script para instalar as dependências e compilar o node-word2vec
+RUN echo '#!/bin/sh' > install.sh && \
+    echo 'pnpm install --no-frozen-lockfile || {' >> install.sh && \
+    echo 'cd node_modules/node-word2vec && \' >> install.sh && \
+    echo 'gcc -lm src/word2vec.c -o bin/word2vec -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result && \' >> install.sh && \
+    echo 'cd ../../ && \' >> install.sh && \
+    echo 'pnpm install --no-frozen-lockfile; }' >> install.sh && \
+    chmod +x install.sh && ./install.sh
 
 # Copie todos os arquivos do projeto para o contêiner
 COPY . .
