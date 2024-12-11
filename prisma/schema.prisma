@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int      @id @default(autoincrement())
+  email              String   @unique
+  username           String   @unique
+  password           String
+  whatsapp           String?
+  gender             String?
+  instagram          String?
+  twitter            String?
+  linkedin           String?
+  facebook           String?
+  imageBase64        String?
+  city               String?
+  state              String?
+  organization       String?
+  areaOfInterest     String[]
+  contributionAxis   String[]
+  themesBiomes       String[]
+  themesCommunities  String[]
+  peoples            String[]
+  roles              String[]
+  weeklyAvailability String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  Impacts            Impacts[]
+
+  @@map("users")
+}
+
+model Material {
+  id              Int          @id @default(autoincrement())
+  name            String
+  email           String
+  publicationType String
+  subjectType     String
+  fileUrl         String?
+  description     String?
+  date            DateTime     @map("date")
+  FileUpload      FileUpload[]
+
+  @@map("materials")
+}
+
+model FileUpload {
+  id         Int      @id @default(autoincrement())
+  path       String
+  material   Material @relation(fields: [materialId], references: [id])
+  date       DateTime @map("date")
+  materialId Int
+
+  @@map("fileupload")
+}
+
+model Impacts {
+  id                Int      @id @default(autoincrement())
+  subject           String
+  urgency           String
+  locality          String
+  support           String
+  affectedCommunity String[]
+  biomes            String[]
+  situation         String
+  contribution      String
+  date              DateTime @map("date")
+  userId            Int
+  user              User     @relation(fields: [userId], references: [id])
+
+  @@map("impacts")
+}
+
+model Newsletter {
+  id                Int      @id @default(autoincrement())
+  name              String
+  email             String
+  date              DateTime @map("date")
+
+  @@map("newsletter")
+} 
