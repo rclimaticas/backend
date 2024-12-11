@@ -53,7 +53,6 @@ exports.router = (0, express_1.Router)();
 exports.router.post("/register", registerController.store);
 exports.router.post("/login", loginController.authenticate);
 exports.router.post("/logout", logoutController.logout);
-const __dirname = path_1.default.resolve();
 exports.router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo enviado');
