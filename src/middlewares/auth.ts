@@ -24,7 +24,7 @@ export function AuthMiddleware(
     const [, token] = authorization.split(" ");
 
     try {
-        const secret = process.env.JWT_SECRET;
+        const secret = process.env.SECRET_KEY;
         if (!secret) {
             throw new Error("JWT_SECRET não está definido");
         }

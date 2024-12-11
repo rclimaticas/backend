@@ -100,7 +100,26 @@ export class ProfileGetController {
             res.status(200).json(users);
         } catch (error) {
             console.error("Erro ao listar os usuários:", error);
-            res.status(500).json({ error: "Erro ao buscar os usuários." }); 
+            res.status(500).json({ error: "Erro ao buscar os usuários." });
+        }
+    }
+
+    async show(req: Request, res: Response) {
+        const { id } = req.params;
+
+        try {
+            const user = await prisma.user.findUnique({
+                where: { id: Number(id) }, 
+            });
+
+            if (!user) {
+                return res.status(404).json({ error: "Usuário não encontrado." });
+            }
+
+            res.status(200).json(user); 
+        } catch (error) {
+            console.error("Erro ao buscar o usuário:", error);
+            res.status(500).json({ error: "Erro ao buscar o usuário." });
         }
     }
 }
