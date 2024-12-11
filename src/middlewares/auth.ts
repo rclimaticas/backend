@@ -26,15 +26,19 @@ export function AuthMiddleware(
     try {
         const secret = process.env.SECRET_KEY;
         if (!secret) {
-            throw new Error("JWT_SECRET não está definido");
+            throw new Error("SECRET_KEY não está definido");
         }
 
-        const decoded = jwt.verify(token, secret);
-        const { id } = decoded as TokenPayload;
+        const decoded = jwt.verify(token, secret) as TokenPayload;
 
-        req.userId = id;
+        if (!decoded || !decoded.id) {
+            throw new Error("Token inválido: id não encontrado");
+        }
+
+        req.userId = decoded.id;
         next();
     } catch (error) {
+        console.error("Erro ao verificar o token:", error);
         return res.status(401).json({ error: "token invalido" });
     }
 }
