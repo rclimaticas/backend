@@ -59,7 +59,7 @@ export class UserLoginController {
             return res.json({ error: "senha esta incorreta ein!"})
         }
         
-        const token = jwt.sign({ id: user.id }, "my_secret", { expiresIn: "1d" });
+        const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY || "default_secret", { expiresIn: "1d" });
        
         return res.json({ user, token })
     }
