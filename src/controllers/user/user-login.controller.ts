@@ -21,7 +21,11 @@ export class UserLoginController {
         if (!isValidPassword) {
             return res.status(401).json({ error: "Senha incorreta!" });
         }
-        const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY!, { expiresIn: "1d" });
+        const token = jwt.sign(
+            { id: user.id }, 
+            process.env.SECRET_KEY as string, 
+            { expiresIn: "1d" }
+        );        
 
         res.cookie("authToken", token, {
             httpOnly: true,

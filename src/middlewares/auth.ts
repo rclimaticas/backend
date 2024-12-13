@@ -18,14 +18,19 @@ export function AuthMiddleware(
 ) {
     const { authorization } = req.headers;
 
+    console.log("Authorization Header:", authorization);
+
     if (!authorization) {
         return res.status(401).json({ error: "Token não fornecido" });
     }
 
     const [, token] = authorization.split(" ");
+    console.log("Token:", token);
 
     try {
         const secret = process.env.SECRET_KEY;
+
+        console.log("SECRET_KEY:", secret);
         if (!secret) {
             throw new Error("SECRET_KEY não está definido no .env");
         }
@@ -35,6 +40,8 @@ export function AuthMiddleware(
         if (!decoded || !decoded.id) {
             throw new Error("Token inválido: id não encontrado");
         }
+
+        console.log("Decoded User ID:", decoded.id);
 
         req.userId = decoded.id;
         next();
