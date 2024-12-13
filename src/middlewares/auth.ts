@@ -47,6 +47,6 @@ export function AuthMiddleware(
         next();
     } catch (error) {
         console.error("Erro ao verificar o token:", error);
-        return res.status(401).json({ error: "Token inválido" });
+        return res.status(401).json({ error: "s" });
     }
 }
