@@ -61,7 +61,7 @@ export const router = Router();
 // User routes
 router.post("/register", registerController.store);
 router.post("/login", loginController.authenticate);
-router.post("/logout", logoutController.logout);
+// router.post("/logout", logoutController.logout);
 
 
 const __dirname = path.resolve();
