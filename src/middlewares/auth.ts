@@ -11,8 +11,12 @@ type TokenPayload = {
     exp: number;
 };
 
+interface CustomRequest extends Request {
+    userId?: string; // userId como opcional
+}
+
 export function AuthMiddleware(
-    req: Request,
+    req: CustomRequest,
     res: Response,
     next: NextFunction
 ) {
@@ -24,7 +28,12 @@ export function AuthMiddleware(
         return res.status(401).json({ error: "Token não fornecido" });
     }
 
-    const [, token] = authorization.split(" ");
+    const parts = authorization.split(" ");
+    if (parts.length !== 2 || parts[0] !== "Bearer") {
+        return res.status(401).json({ error: "Formato do token inválido" });
+    }
+
+    const token = parts[1];
     console.log("Token:", token);
 
     try {
@@ -47,6 +56,6 @@ export function AuthMiddleware(
         next();
     } catch (error) {
         console.error("Erro ao verificar o token:", error);
-        return res.status(401).json({ error: "s" });
+        return res.status(401).json({ error: "Token inválido" });
     }
 }
