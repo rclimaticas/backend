@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import express from 'express';
 import { UserRegisterController } from './controllers/user/user-register.controller';
 import { UserLoginController } from './controllers/user/user-login.controller';
 import { UserLogoutController } from './controllers/user/user-logout.controller';
@@ -57,6 +58,13 @@ const newsScrapeController = new NewsScrapeController();
 
 
 export const router = Router();
+
+router.use(express.json());
+
+router.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 // User routes
 router.post("/register", registerController.store);
@@ -121,3 +129,11 @@ router.post("/newsletter", newsletterCreateController.store)
 
 // News scraping route
 router.get("/scrape-news", newsScrapeController.scrape); 
+
+router.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK' });
+});
+
+router.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+}); 
