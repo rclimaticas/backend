@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
+const express_2 = __importDefault(require("express"));
 const user_register_controller_1 = require("./controllers/user/user-register.controller");
 const user_login_controller_1 = require("./controllers/user/user-login.controller");
 const user_logout_controller_1 = require("./controllers/user/user-logout.controller");
@@ -49,10 +50,16 @@ const newsletterCreateController = new newsletter_create_controller_1.Newsletter
 // Webscraping controlles
 const newsScrapeController = new news_scrape_controller_1.NewsScrapeController();
 exports.router = (0, express_1.Router)();
+exports.router.use(express_2.default.json());
+exports.router.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
 // User routes
 exports.router.post("/register", registerController.store);
 exports.router.post("/login", loginController.authenticate);
-exports.router.post("/logout", logoutController.logout);
+// router.post("/logout", logoutController.logout);
+const __dirname = path_1.default.resolve();
 exports.router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo enviado');
@@ -89,8 +96,8 @@ exports.router.delete("/materials/:materialId", auth_1.AuthMiddleware, materialD
 exports.router.get("/materials", materialGetController.list);
 // Profile routes
 exports.router.put("/profile/:id", auth_1.AuthMiddleware, profileUpdateController.update);
-exports.router.get("/profile/:id", auth_1.AuthMiddleware, profileGetController.index);
-exports.router.get("/profile", profileGetController.index);
+exports.router.get("/users/profile", profileGetController.show);
+exports.router.get("users", profileGetController.index);
 exports.router.delete("/profile/:id", auth_1.AuthMiddleware, profileDeleteController.delete);
 // Impacts routes
 exports.router.post("/impacts", auth_1.AuthMiddleware, impactsCreateController.store);
@@ -100,3 +107,9 @@ exports.router.get("/impacts", impactsListGlobalController.index);
 exports.router.post("/newsletter", newsletterCreateController.store);
 // News scraping route
 exports.router.get("/scrape-news", newsScrapeController.scrape);
+exports.router.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+});
+exports.router.use((req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+});

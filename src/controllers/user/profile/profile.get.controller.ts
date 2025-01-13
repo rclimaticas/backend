@@ -153,16 +153,18 @@ export class ProfileGetController {
     };
 
     public show = async (req: Request, res: Response): Promise<void> => {
-        const token = req.headers['authorization']?.split(' ')[1]; // Extrai o token do cabeçalho Authorization
+        const token = req.headers['authorization']?.split(' ')[1];
 
         if (!token) {
-            return res.status(401).json({ error: "Token de autenticação não fornecido." });
+            res.status(401).json({ error: "Token de autenticação não fornecido." });
+            return;
         }
 
         const userId = this.getUserIdFromToken(token);
 
         if (!userId) {
-            return res.status(401).json({ error: "Token inválido ou expirado." });
+            res.status(401).json({ error: "Token inválido ou expirado." });
+            return;
         }
 
         try {
@@ -171,7 +173,8 @@ export class ProfileGetController {
             });
 
             if (!user) {
-                return res.status(404).json({ error: "Usuário não encontrado." });
+                res.status(404).json({ error: "Usuário não encontrado." });
+                return
             }
 
             res.status(200).json(user);

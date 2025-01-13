@@ -19,7 +19,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             data: {
                 path: originalname,
                 date: new Date(),
-                materialId: 1, // Ajuste este valor conforme necessário para relacionar com um material existente
+                materialId: 1,
             },
         });
         res.status(201).json(file);
