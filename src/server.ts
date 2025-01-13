@@ -17,18 +17,18 @@ app.use(router);
 const email = process.env.EMAIL_SLEEP;
 const password = process.env.EMAIL_PASSWORD;
 
-setInterval(() => {
-  axios.post('https://backend-rclimaticas-2.onrender.com/login', {
-    email,
-    password,
-  })
-  .then(response => {
-    console.log('Resposta do servidor:', response.data);
-  })
-  .catch(error => {
-    console.error('Erro ao enviar o request:', error.message);
-  });
-}, 180000); 
+// setInterval(() => {
+//   axios.post('https://backend-rclimaticas-2.onrender.com/login', {
+//     email,
+//     password,
+//   })
+//   .then(response => {
+//     console.log('Resposta do servidor:', response.data);
+//   })
+//   .catch(error => {
+//     console.error('Erro ao enviar o request:', error.message);
+//   });
+// }, 180000); 
 
 const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
