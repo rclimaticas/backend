@@ -115,8 +115,8 @@ router.get("/materials", materialGetController.list);
 
 // Profile routes
 router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);
-router.get("/profile/:id", AuthMiddleware, profileGetController.show);
-router.get("/profile", profileGetController.index);
+router.get("/users/profile", profileGetController.show);
+router.get("users", profileGetController.index);
 router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
 
 // Impacts routes

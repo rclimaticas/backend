@@ -90,11 +90,59 @@
 //     }
 // }
 
+// import { Request, Response } from 'express';
+// import { prisma } from '../../../utils/prisma';
+
+// export class ProfileGetController {
+//     async index(req: Request, res: Response) {
+//         try {
+//             const users = await prisma.user.findMany();
+//             res.status(200).json(users);
+//         } catch (error) {
+//             console.error("Erro ao listar os usuários:", error);
+//             res.status(500).json({ error: "Erro ao buscar os usuários." });
+//         }
+//     }
+
+//     async show(req: Request, res: Response) {
+//         const { id } = req.params;
+
+//         try {
+//             const user = await prisma.user.findUnique({
+//                 where: { id: Number(id) }, 
+//             });
+
+//             if (!user) {
+//                 return res.status(404).json({ error: "Usuário não encontrado." });
+//             }
+
+//             res.status(200).json(user); 
+//         } catch (error) {
+//             console.error("Erro ao buscar o usuário:", error);
+//             res.status(500).json({ error: "Erro ao buscar o usuário." });
+//         }
+//     }
+// }
+
 import { Request, Response } from 'express';
 import { prisma } from '../../../utils/prisma';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export class ProfileGetController {
-    async index(req: Request, res: Response) {
+    private getUserIdFromToken = (token: string): number | null => {
+        try {
+            const decoded: any = jwt.verify(token, process.env.SECRET_KEY as string);
+            return decoded.id;
+        } catch (error) {
+            console.error("Erro ao decodificar o token:", error);
+            return null;
+        }
+    };
+
+    public index = async (req: Request, res: Response): Promise<void> => {
         try {
             const users = await prisma.user.findMany();
             res.status(200).json(users);
@@ -102,25 +150,34 @@ export class ProfileGetController {
             console.error("Erro ao listar os usuários:", error);
             res.status(500).json({ error: "Erro ao buscar os usuários." });
         }
-    }
+    };
 
-    async show(req: Request, res: Response) {
-        const { id } = req.params;
+    public show = async (req: Request, res: Response): Promise<void> => {
+        const token = req.headers['authorization']?.split(' ')[1]; // Extrai o token do cabeçalho Authorization
+
+        if (!token) {
+            return res.status(401).json({ error: "Token de autenticação não fornecido." });
+        }
+
+        const userId = this.getUserIdFromToken(token);
+
+        if (!userId) {
+            return res.status(401).json({ error: "Token inválido ou expirado." });
+        }
 
         try {
             const user = await prisma.user.findUnique({
-                where: { id: Number(id) }, 
+                where: { id: userId },
             });
 
             if (!user) {
                 return res.status(404).json({ error: "Usuário não encontrado." });
             }
 
-            res.status(200).json(user); 
+            res.status(200).json(user);
         } catch (error) {
             console.error("Erro ao buscar o usuário:", error);
             res.status(500).json({ error: "Erro ao buscar o usuário." });
         }
-    }
+    };
 }
-
