@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { router } from './routes';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(router);
 
 const email = process.env.EMAIL_SLEEP;
 const password = process.env.EMAIL_PASSWORD;
@@ -28,4 +30,7 @@ setInterval(() => {
   });
 }, 180000); 
 
-app.listen(3333, () => console.log('Server is running'));
+const PORT = process.env.PORT || 3333;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
