@@ -28,6 +28,8 @@ import { NewsScrapeController } from './controllers/webscraping/news-scrape.cont
 
 import { GoogleLoginController } from './controllers/user/user-google-login.controller';
 
+import { MetaMaskLoginController } from './controllers/user/user-metamask.controller';
+
 // Multer configuration
 const upload = multer();
 
@@ -61,6 +63,8 @@ const newsScrapeController = new NewsScrapeController();
 // Google Login Auth
 const googleLoginController = new GoogleLoginController();
 
+// Meta Mask Login Auth
+const metaMaskLoginController = new MetaMaskLoginController();
 
 export const router = Router();
 
@@ -121,7 +125,7 @@ router.get("/materials", materialGetController.list);
 // Profile routes
 router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);
 router.get("/users/profile", profileGetController.show);
-router.get("users", profileGetController.index);
+router.get("/users", profileGetController.index);
 router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
 
 // Impacts routes
@@ -136,7 +140,10 @@ router.post("/newsletter", newsletterCreateController.store)
 router.get("/scrape-news", newsScrapeController.scrape); 
 
 // Google Auth Login
-router.post("/auth/google", googleLoginController.authenticate)
+router.post("/auth/google", googleLoginController.authenticate);
+
+// Meta Mask Auth
+router.post("/auth/metamask", metaMaskLoginController.authenticate);
 
 router.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });

@@ -38,7 +38,8 @@ export class GoogleLoginController {
                         email: email || "",
                         username: name || "Usuário do Google",
                         imageBase64: picture || "",
-                        password: process.env.GOOGLE_PASSWORD as string,
+                        password: process.env.API_PASSWORD as string,
+                        metamaskAddress: "",
                     },
                 });
             }
