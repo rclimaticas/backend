@@ -24,7 +24,9 @@ import {ImpactsListGlobalController } from './controllers/impactos/impactis.list
 
 import { NewsletterCreateController } from './controllers/newsletter/newsletter.create.controller';
 
-import { NewsScrapeController } from './controllers/webscraping/news-scrape.controller'
+import { NewsScrapeController } from './controllers/webscraping/news-scrape.controller';
+
+import { GoogleLoginController } from './controllers/user/user-google-login.controller';
 
 // Multer configuration
 const upload = multer();
@@ -55,6 +57,9 @@ const newsletterCreateController = new NewsletterCreateController();
 
 // Webscraping controlles
 const newsScrapeController = new NewsScrapeController();
+
+// Google Login Auth
+const googleLoginController = new GoogleLoginController();
 
 
 export const router = Router();
@@ -129,6 +134,9 @@ router.post("/newsletter", newsletterCreateController.store)
 
 // News scraping route
 router.get("/scrape-news", newsScrapeController.scrape); 
+
+// Google Auth Login
+router.post("/auth/google", googleLoginController.authenticate)
 
 router.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
