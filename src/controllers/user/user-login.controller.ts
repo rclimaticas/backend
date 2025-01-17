@@ -27,12 +27,14 @@ export class UserLoginController {
             { expiresIn: "1d" }
         );        
 
-        res.cookie("authToken", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict", 
-            maxAge: 24 * 60 * 60 * 1000,
-        });
+        res.cookie('authToken', token, {
+            httpOnly: true, // Torna o cookie acessível no JavaScript
+            secure: true, // Altere para true em produção (com HTTPS)
+            sameSite: 'none', // Ajuste para lax ou none se for usar requisições cruzadas
+            maxAge: 24 * 60 * 60 * 1000, // 1 dia
+          });
+          
+                   
 
         return res.json({ message: "Login bem-sucedido!", token });
     }

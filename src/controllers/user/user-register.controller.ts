@@ -24,6 +24,7 @@ export class UserRegisterController {
                 email, 
                 username,
                 password: hash_password,
+                metamaskAddress: null,
             },
         });
 
