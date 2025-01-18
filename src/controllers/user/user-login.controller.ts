@@ -28,10 +28,10 @@ export class UserLoginController {
         );        
 
         res.cookie('authToken', token, {
-            httpOnly: true, // Torna o cookie acessível no JavaScript
-            secure: true, // Altere para true em produção (com HTTPS)
-            sameSite: 'none', // Ajuste para lax ou none se for usar requisições cruzadas
-            maxAge: 24 * 60 * 60 * 1000, // 1 dia
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 24 * 60 * 60 * 1000, 
           });
           
                    

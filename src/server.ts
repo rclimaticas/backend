@@ -55,9 +55,8 @@ dotenv.config();
 
 const app = express();
 
-// Configuração do CORS para permitir cookies e definir origem específica
 const corsOptions = {
-  origin: process.env.API_URL as string, // Substitua pelo seu domínio frontend
+  origin: process.env.API_URL,
   credentials: true, 
 };
 
