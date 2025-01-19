@@ -26,6 +26,8 @@ import { NewsletterCreateController } from './controllers/newsletter/newsletter.
 
 import { NewsScrapeController } from './controllers/webscraping/news-scrape.controller';
 
+import { SofiaChatController } from './controllers/sofiachat/sofia-chat.controller';
+
 import { GoogleLoginController } from './controllers/user/user-google-login.controller';
 
 import { MetaMaskLoginController } from './controllers/user/user-metamask.controller';
@@ -56,6 +58,9 @@ const impactsListGlobalController = new ImpactsListGlobalController();
 
 // Newsletter controllers
 const newsletterCreateController = new NewsletterCreateController();
+
+// SofiaChat controllers
+const sofiaChatController = new SofiaChatController();
 
 // Webscraping controlles
 const newsScrapeController = new NewsScrapeController();
@@ -138,6 +143,9 @@ router.post("/newsletter", newsletterCreateController.store)
 
 // News scraping route
 router.get("/scrape-news", newsScrapeController.scrape); 
+
+// SofiaChat routes
+router.post("/sofia-chat", sofiaChatController.sofia)
 
 // Google Auth Login
 router.post("/auth/google", googleLoginController.authenticate);
