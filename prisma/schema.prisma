@@ -17,7 +17,8 @@ model User {
   id                 Int      @id @default(autoincrement())
   email              String   @unique
   username           String   @unique
-  metamaskAddress    String?   @unique
+  name               String   @default ("Default Name")
+  metamaskAddress    String?  @unique
   password           String
   whatsapp           String?
   gender             String?

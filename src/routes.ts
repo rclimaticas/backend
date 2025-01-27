@@ -23,6 +23,7 @@ import { ImpactsListController } from './controllers/impactos/impacts.list.contr
 import {ImpactsListGlobalController } from './controllers/impactos/impactis.list-global.controller';
 
 import { NewsletterCreateController } from './controllers/newsletter/newsletter.create.controller';
+import { NewsletterListController } from './controllers/newsletter/newsletter.list.controller';
 
 import { NewsScrapeController } from './controllers/webscraping/news-scrape.controller';
 
@@ -58,6 +59,7 @@ const impactsListGlobalController = new ImpactsListGlobalController();
 
 // Newsletter controllers
 const newsletterCreateController = new NewsletterCreateController();
+const newsletterListController = new NewsletterListController()
 
 // SofiaChat controllers
 const sofiaChatController = new SofiaChatController();
@@ -140,6 +142,7 @@ router.get("/impacts", impactsListGlobalController.index)
 
 // Newsletter routes
 router.post("/newsletter", newsletterCreateController.store)
+router.get("/newsletter/emails", newsletterListController.getEmails)
 
 // News scraping route
 router.get("/scrape-news", newsScrapeController.scrape); 
