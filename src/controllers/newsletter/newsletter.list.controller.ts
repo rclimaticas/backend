@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../../utils/prisma";// Supondo que você tenha o Prisma configurado
+import { prisma } from "../../utils/prisma";
 
 export class NewsletterListController {
 
