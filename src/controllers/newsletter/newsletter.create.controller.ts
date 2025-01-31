@@ -86,10 +86,18 @@ export class NewsletterCreateController {
                                 </tr>
                                 <tr>
                                     <td align="center" style="background-color: #000000; padding: 20px; color: #ffffff;">
+                                        <p style="font-size: 25px; line-height: 1.6; text-align: center;">Agora que você faz parte do VIP da liga, colete sua NFT através do link abaixo e aguarde por mais novidades da liga!</p>
                                         <a href="#" style="display: block; margin-bottom: 20px;">
                                             <img src="https://res.cloudinary.com/dw4jmcntj/image/upload/v1738267140/y2smwgdioixgt1hcqgdn.png" width="300" alt="NFT" style="display: block;"/>
                                         </a>
                                         <a href="#" style="display: inline-block; padding: 12px 24px; background-color: orange; color: black; text-decoration: none; font-size: 25px; font-weight: bold; text-align: center; font-family: Arial, sans-serif;">RESGATE SEU NFT</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding: 40px 20px; font-family: Arial, sans-serif; color: #333333;">
+                                        <p style="font-size: 25px; line-height: 1.6; text-align: center;">
+                                            Atenciosamente, <br/> Equipe da Liga.
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
