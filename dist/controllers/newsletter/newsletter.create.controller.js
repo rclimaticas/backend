@@ -1,7 +1,4 @@
 "use strict";
-// import { Request, Response } from "express";
-// import { prisma } from "../../utils/prisma";
-// import * as nodemailer from 'nodemailer';
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -91,7 +88,7 @@ class NewsletterCreateController {
                 const mailOptions = {
                     from: "vitor@ligacolaborativa.site",
                     to: `${email}`,
-                    subject: "Informações de Cadastro na Newsletter",
+                    subject: "Parabéns, agora você é Vip da Liga!",
                     html: `
         <!DOCTYPE html>
         <html lang="pt-BR">
@@ -118,6 +115,7 @@ class NewsletterCreateController {
                                 </tr>
                                 <tr>
                                     <td align="center" style="background-color: #000000; padding: 20px; color: #ffffff;">
+                                        <p style="font-size: 25px; line-height: 1.6; text-align: center;">Agora que você faz parte do VIP da liga, colete sua NFT através do link abaixo e aguarde por mais novidades da liga!</p>
                                         <a href="#" style="display: block; margin-bottom: 20px;">
                                             <img src="https://res.cloudinary.com/dw4jmcntj/image/upload/v1738267140/y2smwgdioixgt1hcqgdn.png" width="300" alt="NFT" style="display: block;"/>
                                         </a>
@@ -125,17 +123,27 @@ class NewsletterCreateController {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td align="center" style="padding: 40px 20px; font-family: Arial, sans-serif; color: #333333;">
+                                        <p style="font-size: 25px; line-height: 1.6; text-align: center;">
+                                            Atenciosamente, <br/> Equipe da Liga.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td align="center" style="padding: 20px; font-family: Arial, sans-serif; color: #777777; font-size: 16px;">
                                         <p>&copy; 2025 Liga Colaborativa dos Povos. Todos os direitos reservados.</p>
                                         <p>
-                                            <a href="#" style="margin: 0 10px;">
+                                            <a href="https://www.instagram.com/aliga.on/" style="margin: 0 10px;">
                                                 <img src="https://img.icons8.com/?size=100&id=g7SBGFwja0xa&format=png&color=000000" width="30" alt="Ícone 1" style="display: inline-block;"/>
                                             </a>
                                             <a href="#" style="margin: 0 10px;">
                                                 <img src="https://img.icons8.com/?size=100&id=Fto28UC6Owy0&format=png&color=000000" width="30" alt="Ícone 2" style="display: inline-block;"/>
                                             </a>
-                                            <a href="#" style="margin: 0 10px;">
+                                            <a href="liga@ligacolaborativa.site" style="margin: 0 10px;">
                                                 <img src="https://img.icons8.com/?size=100&id=h7SY5uPzkIHw&format=png&color=000000" width="30" alt="Ícone 3" style="display: inline-block;"/>
+                                            </a>
+                                            <a href="https://www.youtube.com/@ligacolaborativa" style="margin: 0 10px;">
+                                                <img src="https://img.icons8.com/?size=100&id=37325&format=png&color=000000" width="30" alt="Ícone 3" style="display: inline-block;"/>
                                             </a>
                                         </p>
                                     </td>

@@ -59,7 +59,7 @@ export class NewsletterCreateController {
       const mailOptions = {
         from: "vitor@ligacolaborativa.site",
         to: `${email}`,
-        subject: "Informações de Cadastro na Newsletter",
+        subject: "Parabéns, agora você é Vip da Liga!",
         html: `
         <!DOCTYPE html>
         <html lang="pt-BR">
