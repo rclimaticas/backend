@@ -25,6 +25,7 @@ class UserRegisterController {
                 email,
                 username,
                 password: hash_password,
+                metamaskAddress: null,
             },
         });
         return res.status(201).json({ user });

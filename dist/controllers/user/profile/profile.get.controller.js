@@ -1,9 +1,9 @@
 "use strict";
-// import { Request, Response } from 'express';
-// import { prisma } from '../../../utils/prisma';
-// import nodemailer from 'nodemailer';
-// import ExcelJS from 'exceljs';
-// import { Buffer } from 'buffer';
+// // import { Request, Response } from 'express';
+// // import { prisma } from '../../../utils/prisma';
+// // import nodemailer from 'nodemailer';
+// // import ExcelJS from 'exceljs';
+// // import { Buffer } from 'buffer';
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -36,8 +36,8 @@ class ProfileGetController {
             }
         };
         this.show = async (req, res) => {
-            var _a;
-            const token = (_a = req.headers['authorization']) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+            // Pega o token diretamente dos cookies
+            const token = req.cookies['authToken'];
             if (!token) {
                 res.status(401).json({ error: "Token de autenticação não fornecido." });
                 return;

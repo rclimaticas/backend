@@ -21,10 +21,10 @@ class UserLoginController {
             return res.status(401).json({ error: "Senha incorreta!" });
         }
         const token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.SECRET_KEY, { expiresIn: "1d" });
-        res.cookie("authToken", token, {
+        res.cookie('authToken', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            secure: true,
+            sameSite: 'none',
             maxAge: 24 * 60 * 60 * 1000,
         });
         return res.json({ message: "Login bem-sucedido!", token });

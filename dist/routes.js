@@ -25,7 +25,11 @@ const impacts_create_controller_1 = require("./controllers/impactos/impacts.crea
 const impacts_list_controller_1 = require("./controllers/impactos/impacts.list.controller");
 const impactis_list_global_controller_1 = require("./controllers/impactos/impactis.list-global.controller");
 const newsletter_create_controller_1 = require("./controllers/newsletter/newsletter.create.controller");
+const newsletter_list_controller_1 = require("./controllers/newsletter/newsletter.list.controller");
 const news_scrape_controller_1 = require("./controllers/webscraping/news-scrape.controller");
+const sofia_chat_controller_1 = require("./controllers/sofiachat/sofia-chat.controller");
+const user_google_login_controller_1 = require("./controllers/user/user-google-login.controller");
+const user_metamask_controller_1 = require("./controllers/user/user-metamask.controller");
 // Multer configuration
 const upload = (0, multer_1.default)();
 // User controllers
@@ -47,8 +51,15 @@ const impactsListController = new impacts_list_controller_1.ImpactsListControlle
 const impactsListGlobalController = new impactis_list_global_controller_1.ImpactsListGlobalController();
 // Newsletter controllers
 const newsletterCreateController = new newsletter_create_controller_1.NewsletterCreateController();
+const newsletterListController = new newsletter_list_controller_1.NewsletterListController();
+// SofiaChat controllers
+const sofiaChatController = new sofia_chat_controller_1.SofiaChatController();
 // Webscraping controlles
 const newsScrapeController = new news_scrape_controller_1.NewsScrapeController();
+// Google Login Auth
+const googleLoginController = new user_google_login_controller_1.GoogleLoginController();
+// Meta Mask Login Auth
+const metaMaskLoginController = new user_metamask_controller_1.MetaMaskLoginController();
 exports.router = (0, express_1.Router)();
 exports.router.use(express_2.default.json());
 exports.router.use((req, res, next) => {
@@ -58,8 +69,8 @@ exports.router.use((req, res, next) => {
 // User routes
 exports.router.post("/register", registerController.store);
 exports.router.post("/login", loginController.authenticate);
-// router.post("/logout", logoutController.logout);
-// const __dirname = path_1.default.resolve();
+exports.router.post("/logout", logoutController.logout);
+const __dirname = path_1.default.resolve();
 exports.router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo enviado');
@@ -97,7 +108,7 @@ exports.router.get("/materials", materialGetController.list);
 // Profile routes
 exports.router.put("/profile/:id", auth_1.AuthMiddleware, profileUpdateController.update);
 exports.router.get("/users/profile", profileGetController.show);
-exports.router.get("users", profileGetController.index);
+exports.router.get("/users", profileGetController.index);
 exports.router.delete("/profile/:id", auth_1.AuthMiddleware, profileDeleteController.delete);
 // Impacts routes
 exports.router.post("/impacts", auth_1.AuthMiddleware, impactsCreateController.store);
@@ -105,8 +116,15 @@ exports.router.get("/impacts/user/:userId", auth_1.AuthMiddleware, impactsListCo
 exports.router.get("/impacts", impactsListGlobalController.index);
 // Newsletter routes
 exports.router.post("/newsletter", newsletterCreateController.store);
+exports.router.get("/newsletter/emails", newsletterListController.getEmails);
 // News scraping route
 exports.router.get("/scrape-news", newsScrapeController.scrape);
+// SofiaChat routes
+exports.router.post("/sofia-chat", sofiaChatController.sofia);
+// Google Auth Login
+exports.router.post("/auth/google", googleLoginController.authenticate);
+// Meta Mask Auth
+exports.router.post("/auth/metamask", metaMaskLoginController.authenticate);
 exports.router.get('/health', (req, res) => {
     res.status(200).json({ status: 'OK' });
 });
