@@ -108,7 +108,7 @@ class NewsletterCreateController {
                                         <h2 style="color: #4A90E2; font-size: 28px;">Olá ${name}! Parabéns!</h2>
                                         <p style="font-size: 25px; line-height: 1.6; text-align: center;">
                                             Seu cadastro foi realizado com sucesso.<br><br>
-                                            Na natureza tudo é evolução. A evolução vem das experiências, e a Liga Colaborativa está evoluindo!</strong><br><br>
+                                            Na natureza tudo é evolução. A evolução vem das experiências e a Liga Colaborativa está evoluindo!</strong><br><br>
                                             Aprendemos com os povos, suas culturas e a interação do ser humano com a natureza e os desafios nos territórios. 
                                             E desse aprendizado, estamos dando mais um passo para uma 
                                             <strong>Nova Versão da Plataforma Colaborativa </strong>, com solução de bugs, novas funcionalidades e experiência do usuário. <br><br>
