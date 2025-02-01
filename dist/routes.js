@@ -26,6 +26,7 @@ const impacts_list_controller_1 = require("./controllers/impactos/impacts.list.c
 const impactis_list_global_controller_1 = require("./controllers/impactos/impactis.list-global.controller");
 const newsletter_create_controller_1 = require("./controllers/newsletter/newsletter.create.controller");
 const newsletter_list_controller_1 = require("./controllers/newsletter/newsletter.list.controller");
+const newsletter_delete_controller_1 = require("./controllers/newsletter/newsletter.delete.controller");
 const news_scrape_controller_1 = require("./controllers/webscraping/news-scrape.controller");
 const sofia_chat_controller_1 = require("./controllers/sofiachat/sofia-chat.controller");
 const user_google_login_controller_1 = require("./controllers/user/user-google-login.controller");
@@ -52,6 +53,7 @@ const impactsListGlobalController = new impactis_list_global_controller_1.Impact
 // Newsletter controllers
 const newsletterCreateController = new newsletter_create_controller_1.NewsletterCreateController();
 const newsletterListController = new newsletter_list_controller_1.NewsletterListController();
+const newsletterDeleteController = new newsletter_delete_controller_1.NewsletterDeleteController();
 // SofiaChat controllers
 const sofiaChatController = new sofia_chat_controller_1.SofiaChatController();
 // Webscraping controlles
@@ -116,6 +118,7 @@ exports.router.get("/impacts", impactsListGlobalController.index);
 // Newsletter routes
 exports.router.post("/newsletter", newsletterCreateController.store);
 exports.router.get("/newsletter/emails", newsletterListController.getEmails);
+exports.router.delete("/newsletter/delete", newsletterDeleteController.deleteAllEmails);
 // News scraping route
 exports.router.get("/scrape-news", newsScrapeController.scrape);
 // SofiaChat routes
