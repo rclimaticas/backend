@@ -76,7 +76,7 @@ export class NewsletterCreateController {
                                 <tr>
                                     <td align="center" style="padding: 40px 20px; font-family: Arial, sans-serif; color: #333333;">
                                         <img src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png" width="100" alt="Logo" style="display: block;"/>
-                                        <h2 style="color: #4A90E2; font-size: 28px;">Olá, ${name}, parabéns!</h2>
+                                        <h2 style="color: #4A90E2; font-size: 28px;">Olá ${name}, parabéns!</h2>
                                         <p style="font-size: 25px; line-height: 1.6; text-align: center;">
                                             Seu cadastro foi realizado com sucesso.<br><br>
                                             Na natureza tudo é evolução... Evolução vem das experiências... <strong>E a Liga Colaborativa está evoluindo!</strong><br><br>
@@ -90,7 +90,7 @@ export class NewsletterCreateController {
                                         <a href="#" style="display: block; margin-bottom: 20px;">
                                             <img src="https://res.cloudinary.com/dw4jmcntj/image/upload/v1738267140/y2smwgdioixgt1hcqgdn.png" width="300" alt="NFT" style="display: block;"/>
                                         </a>
-                                        <a href="#" style="display: inline-block; padding: 12px 24px; background-color: orange; color: black; text-decoration: none; font-size: 25px; font-weight: bold; text-align: center; font-family: Arial, sans-serif;">RESGATE SEU NFT</a>
+                                        <a href="https://gotas.social/gota/1738428072331x776979103168856000" style="display: inline-block; padding: 12px 24px; background-color: orange; color: black; text-decoration: none; font-size: 25px; font-weight: bold; text-align: center; font-family: Arial, sans-serif;">RESGATE SEU NFT</a>
                                     </td>
                                 </tr>
                                 <tr>

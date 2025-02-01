@@ -70,7 +70,6 @@ exports.router.use((req, res, next) => {
 exports.router.post("/register", registerController.store);
 exports.router.post("/login", loginController.authenticate);
 exports.router.post("/logout", logoutController.logout);
-
 exports.router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo enviado');
