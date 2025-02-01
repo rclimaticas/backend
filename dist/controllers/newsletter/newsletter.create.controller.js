@@ -105,11 +105,15 @@ class NewsletterCreateController {
                                 <tr>
                                     <td align="center" style="padding: 40px 20px; font-family: Arial, sans-serif; color: #333333;">
                                         <img src="https://rclimaticas-fileupload.s3.sa-east-1.amazonaws.com/logoLC-DRqUmzjb.png" width="100" alt="Logo" style="display: block;"/>
-                                        <h2 style="color: #4A90E2; font-size: 28px;">Olá ${name}, parabéns!</h2>
+                                        <h2 style="color: #4A90E2; font-size: 28px;">Olá ${name}! Parabéns!</h2>
                                         <p style="font-size: 25px; line-height: 1.6; text-align: center;">
                                             Seu cadastro foi realizado com sucesso.<br><br>
-                                            Na natureza tudo é evolução... Evolução vem das experiências... <strong>E a Liga Colaborativa está evoluindo!</strong><br><br>
-                                            Estamos dando mais um passo para uma <strong>Nova Versão da Plataforma Colaborativa</strong>, com solução de bugs, novas funcionalidades e uma melhor experiência do usuário.
+                                            Na natureza tudo é evolução. A evolução vem das experiências, e a Liga Colaborativa está evoluindo!</strong><br><br>
+                                            Aprendemos com os povos, suas culturas e a interação do ser humano com a natureza e os desafios nos territórios. 
+                                            E desse aprendizado, estamos dando mais um passo para uma 
+                                            <strong>Nova Versão da Plataforma Colaborativa </strong>, com solução de bugs, novas funcionalidades e experiência do usuário. <br><br>
+                                            Tudo isso para tornar esse espaço realmente útil para a sociedade no desafio de valorizar os povos, suas culturas e regenerar a natureza.
+
                                         </p>
                                     </td>
                                 </tr>
@@ -135,12 +139,6 @@ class NewsletterCreateController {
                                         <p>
                                             <a href="https://www.instagram.com/aliga.on/" style="margin: 0 10px;">
                                                 <img src="https://img.icons8.com/?size=100&id=g7SBGFwja0xa&format=png&color=000000" width="30" alt="Ícone 1" style="display: inline-block;"/>
-                                            </a>
-                                            <a href="#" style="margin: 0 10px;">
-                                                <img src="https://img.icons8.com/?size=100&id=Fto28UC6Owy0&format=png&color=000000" width="30" alt="Ícone 2" style="display: inline-block;"/>
-                                            </a>
-                                            <a href="liga@ligacolaborativa.site" style="margin: 0 10px;">
-                                                <img src="https://img.icons8.com/?size=100&id=h7SY5uPzkIHw&format=png&color=000000" width="30" alt="Ícone 3" style="display: inline-block;"/>
                                             </a>
                                             <a href="https://www.youtube.com/@ligacolaborativa" style="margin: 0 10px;">
                                                 <img src="https://img.icons8.com/?size=100&id=37325&format=png&color=000000" width="30" alt="Ícone 3" style="display: inline-block;"/>
