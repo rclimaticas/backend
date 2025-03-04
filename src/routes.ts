@@ -132,14 +132,14 @@ router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController
 router.get("/materials", materialGetController.list);
 
 // Profile routes
-router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);
+router.put("/user/update", AuthMiddleware, profileUpdateController.update);
 router.get("/users/profile", profileGetController.show);
 router.get("/users", profileGetController.index);
 router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
 
 // Impacts routes
 router.post("/impacts", AuthMiddleware, impactsCreateController.store);
-router.get("/impacts/user/:userId", AuthMiddleware, impactsListController.index);
+router.get("/impacts/user", AuthMiddleware, impactsListController.index);
 router.get("/impacts", impactsListGlobalController.index)
 
 // Newsletter routes

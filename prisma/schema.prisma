@@ -36,7 +36,7 @@ model User {
   themesCommunities  String[]
   peoples            String[]
   roles              String[]
-  weeklyAvailability String?
+  weeklyAvailability Int?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   Impacts            Impacts[]

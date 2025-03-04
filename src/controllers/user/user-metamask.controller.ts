@@ -8,6 +8,9 @@ dotenv.config();
 export class MetaMaskLoginController {
     async authenticate(req: Request, res: Response) {
         const metamaskAddress = req.body.metamaskAddress || req.body.address;
+        // let email = `${metamaskAddress}@example.com`; caso der problema
+        let email = `${metamaskAddress.slice(0, 6)}@example.com`
+        let username = `Usuário ${metamaskAddress.slice(0, 6)}`;
 
         if (!metamaskAddress) {
             return res.status(400).json({ error: "Endereço da carteira MetaMask é necessário!" });
@@ -22,11 +25,13 @@ export class MetaMaskLoginController {
                 where: { metamaskAddress },
             });
 
+
+
             if (!user) {
                 user = await prisma.user.create({
                     data: {
-                        email: "",
-                        username: "Usuário",
+                        email: email,
+                        username: username,
                         imageBase64: "", 
                         metamaskAddress,
                         password: process.env.API_PASSWORD as string,
@@ -48,8 +53,18 @@ export class MetaMaskLoginController {
                 maxAge: 24 * 60 * 60 * 1000,
             });
 
-
-            return res.json({ message: "Login bem-sucedido com MetaMask!", token: appToken });
+            const userWithToken = {
+                ...user,
+                token: appToken,
+              };
+        
+              console.log(userWithToken)
+              
+        
+              return res.json({
+                message: "Login bem-sucedido com Google!",
+                user: userWithToken,
+              });
         } catch (error) {
             console.error("Erro na autenticação com MetaMask:", error);
             return res.status(500).json({ error: "Erro ao autenticar com MetaMask." });

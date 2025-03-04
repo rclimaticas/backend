@@ -2,15 +2,21 @@ import { Request, Response } from "express";
 import { prisma } from "../../utils/prisma";
 import * as nodemailer from 'nodemailer';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 
-// tempo de disparo de flags -> validador -> bot
-// fluxo sendo visível
-// retorno dos dados para validadores para abrir mais os dados
 export class ImpactsCreateController {
     async store(req: Request, res: Response) {
-        const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution, userId } = req.body;
+        const token = req.cookies?.authToken;
+        if (!token) {
+            return res.status(401).json({ error: "Token não encontrado." });
+        }
 
         try {
+            const decoded: any = jwt.verify(token, process.env.SECRET_KEY!);
+            const userId = decoded.id;
+
+            const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution } = req.body;
+
             const newImpact = await prisma.impacts.create({
                 data: {
                     subject,
@@ -25,6 +31,7 @@ export class ImpactsCreateController {
                     userId
                 },
             });
+
             const user = await prisma.user.findUnique({
                 where: { id: userId },
             });
@@ -36,26 +43,32 @@ export class ImpactsCreateController {
             const response = await axios.get(
                 `https://urpia-algorithm-production.up.railway.app/?impact_id=${newImpact.id}`
             );
-            
-
             const nearestNeighbors = response.data.nearest_neighbors;
 
-            if (!nearestNeighbors || nearestNeighbors.length === 0) {
-                return res.status(404).json({ error: "Nenhum e-mail encontrado." });
+            let neighborsToNotify = nearestNeighbors;
+            if (!neighborsToNotify || neighborsToNotify.length === 0) {
+                neighborsToNotify = await prisma.user.findMany({
+                    select: {
+                        email: true
+                    },
+                });
+            }
+
+            if (!neighborsToNotify || neighborsToNotify.length === 0) {
+                return res.status(404).json({ error: "Nenhum usuário para notificar." });
             }
 
             const transporter = nodemailer.createTransport({
                 host: 'mail.privateemail.com',
                 port: 465,
-                secure: true, 
+                secure: true,
                 auth: {
                     user: 'vitor@ligacolaborativa.site',
                     pass: process.env.PASSWORD_EMAIL,
                 },
             });
 
-
-            for (const neighbor of nearestNeighbors) {
+            for (const neighbor of neighborsToNotify) {
                 let mailOptions = {
                     from: 'vitor@ligacolaborativa.site',
                     to: neighbor.email,
@@ -70,7 +83,6 @@ export class ImpactsCreateController {
                     Biomas: ${biomes}
                     Situação: ${situation}
                     Contribuição: ${contribution}
-                    ID do Usuário: ${userId}
                     Nome do Usuário: ${user.username}
                     E-mail do Usuário: ${user.email}
                     Data: ${new Date().toISOString()}
@@ -95,6 +107,7 @@ export class ImpactsCreateController {
         }
     }
 }
+
 
 
 

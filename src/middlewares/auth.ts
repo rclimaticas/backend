@@ -74,7 +74,7 @@ type TokenPayload = {
 };
 
 interface CustomRequest extends Request {
-    userId?: string; // userId como opcional
+    userId?: string;
 }
 
 export function AuthMiddleware(
@@ -106,7 +106,7 @@ export function AuthMiddleware(
 
         // Armazena o ID do usuário no objeto req
         req.userId = decoded.id;
-        next(); // Prossegue para a próxima etapa do middleware ou rota
+        next(); 
     } catch (error) {
         console.error("Erro ao verificar o token:", error);
         return res.status(401).json({ error: "Token inválido" });

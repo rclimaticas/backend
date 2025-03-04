@@ -63,7 +63,7 @@ function AuthMiddleware(req, res, next) {
         }
         // Armazena o ID do usuário no objeto req
         req.userId = decoded.id;
-        next(); // Prossegue para a próxima etapa do middleware ou rota
+        next();
     }
     catch (error) {
         console.error("Erro ao verificar o token:", error);

@@ -107,7 +107,7 @@ exports.router.put("/materials/:materialId", auth_1.AuthMiddleware, materialUpda
 exports.router.delete("/materials/:materialId", auth_1.AuthMiddleware, materialDeleteController.delete);
 exports.router.get("/materials", materialGetController.list);
 // Profile routes
-exports.router.put("/profile/:id", auth_1.AuthMiddleware, profileUpdateController.update);
+exports.router.put("/user/update", auth_1.AuthMiddleware, profileUpdateController.update);
 exports.router.get("/users/profile", profileGetController.show);
 exports.router.get("/users", profileGetController.index);
 exports.router.delete("/profile/:id", auth_1.AuthMiddleware, profileDeleteController.delete);

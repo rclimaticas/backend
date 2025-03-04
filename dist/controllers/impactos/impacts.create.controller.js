@@ -40,13 +40,18 @@ exports.ImpactsCreateController = void 0;
 const prisma_1 = require("../../utils/prisma");
 const nodemailer = __importStar(require("nodemailer"));
 const axios_1 = __importDefault(require("axios"));
-// tempo de disparo de flags -> validador -> bot
-// fluxo sendo visível
-// retorno dos dados para validadores para abrir mais os dados
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class ImpactsCreateController {
     async store(req, res) {
-        const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution, userId } = req.body;
+        var _a;
+        const token = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a.authToken;
+        if (!token) {
+            return res.status(401).json({ error: "Token não encontrado." });
+        }
         try {
+            const decoded = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY);
+            const userId = decoded.id;
+            const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution } = req.body;
             const newImpact = await prisma_1.prisma.impacts.create({
                 data: {
                     subject,
@@ -69,8 +74,16 @@ class ImpactsCreateController {
             }
             const response = await axios_1.default.get(`https://urpia-algorithm-production.up.railway.app/?impact_id=${newImpact.id}`);
             const nearestNeighbors = response.data.nearest_neighbors;
-            if (!nearestNeighbors || nearestNeighbors.length === 0) {
-                return res.status(404).json({ error: "Nenhum e-mail encontrado." });
+            let neighborsToNotify = nearestNeighbors;
+            if (!neighborsToNotify || neighborsToNotify.length === 0) {
+                neighborsToNotify = await prisma_1.prisma.user.findMany({
+                    select: {
+                        email: true
+                    },
+                });
+            }
+            if (!neighborsToNotify || neighborsToNotify.length === 0) {
+                return res.status(404).json({ error: "Nenhum usuário para notificar." });
             }
             const transporter = nodemailer.createTransport({
                 host: 'mail.privateemail.com',
@@ -81,10 +94,10 @@ class ImpactsCreateController {
                     pass: process.env.PASSWORD_EMAIL,
                 },
             });
-            for (const neighbor of nearestNeighbors) {
+            for (const neighbor of neighborsToNotify) {
                 let mailOptions = {
                     from: 'vitor@ligacolaborativa.site',
-                    to: neighbor.email,
+                    to: 'jvittor.contatos@gmail.com',
                     subject: 'Novo Impacto Criado',
                     text: `Olá,
                     Um novo impacto foi criado com os seguintes detalhes:
@@ -96,7 +109,6 @@ class ImpactsCreateController {
                     Biomas: ${biomes}
                     Situação: ${situation}
                     Contribuição: ${contribution}
-                    ID do Usuário: ${userId}
                     Nome do Usuário: ${user.username}
                     E-mail do Usuário: ${user.email}
                     Data: ${new Date().toISOString()}
