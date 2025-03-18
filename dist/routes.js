@@ -113,7 +113,7 @@ exports.router.get("/users", profileGetController.index);
 exports.router.delete("/profile/:id", auth_1.AuthMiddleware, profileDeleteController.delete);
 // Impacts routes
 exports.router.post("/impacts", auth_1.AuthMiddleware, impactsCreateController.store);
-exports.router.get("/impacts/user/:userId", auth_1.AuthMiddleware, impactsListController.index);
+exports.router.get("/impacts/user", auth_1.AuthMiddleware, impactsListController.index);
 exports.router.get("/impacts", impactsListGlobalController.index);
 // Newsletter routes
 exports.router.post("/newsletter", newsletterCreateController.store);
