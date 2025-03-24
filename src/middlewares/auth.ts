@@ -64,17 +64,18 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-// Carrega as variáveis de ambiente
 dotenv.config();
 
 type TokenPayload = {
     id: string;
+    role: string;
     iat: number;
     exp: number;
 };
 
 interface CustomRequest extends Request {
     userId?: string;
+    userRole?: string;
 }
 
 export function AuthMiddleware(
@@ -82,7 +83,7 @@ export function AuthMiddleware(
     res: Response,
     next: NextFunction
 ) {
-    // Obtém o token do cookie
+
     const token = req.cookies.authToken;
 
     if (!token) {
@@ -96,16 +97,13 @@ export function AuthMiddleware(
             throw new Error("SECRET_KEY não está definido no .env");
         }
 
-        // Decodifica o token usando a chave secreta
         const decoded = jwt.verify(token, secret) as TokenPayload;
-
-        // Verifica se o token é válido e contém o ID do usuário
         if (!decoded || !decoded.id) {
             throw new Error("Token inválido: id não encontrado");
         }
 
-        // Armazena o ID do usuário no objeto req
         req.userId = decoded.id;
+        req.userRole = decoded.role;
         next(); 
     } catch (error) {
         console.error("Erro ao verificar o token:", error);

@@ -42,10 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthMiddleware = AuthMiddleware;
 const jwt = __importStar(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
-// Carrega as variáveis de ambiente
 dotenv_1.default.config();
 function AuthMiddleware(req, res, next) {
-    // Obtém o token do cookie
     const token = req.cookies.authToken;
     if (!token) {
         return res.status(401).json({ error: "Token não fornecido" });
@@ -55,14 +53,12 @@ function AuthMiddleware(req, res, next) {
         if (!secret) {
             throw new Error("SECRET_KEY não está definido no .env");
         }
-        // Decodifica o token usando a chave secreta
         const decoded = jwt.verify(token, secret);
-        // Verifica se o token é válido e contém o ID do usuário
         if (!decoded || !decoded.id) {
             throw new Error("Token inválido: id não encontrado");
         }
-        // Armazena o ID do usuário no objeto req
         req.userId = decoded.id;
+        req.userRole = decoded.role;
         next();
     }
     catch (error) {

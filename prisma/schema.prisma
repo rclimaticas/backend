@@ -37,6 +37,7 @@ model User {
   peoples            String[]
   roles              String[]
   weeklyAvailability Int?
+  ligador            Int?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   Impacts            Impacts[]
@@ -80,9 +81,26 @@ model Impacts {
   contribution      String
   date              DateTime @map("date")
   userId            Int
+  validated         Int?
   user              User     @relation(fields: [userId], references: [id])
 
   @@map("impacts")
+}
+
+model ImpactsValidated {
+  id                Int      @id @default(autoincrement())
+  subject           String
+  urgency           String
+  locality          String
+  support           String
+  affectedCommunity String[]
+  biomes            String[]
+  situation         String
+  contribution      String
+  userId            Int
+  date              DateTime @map("date")
+
+  @@map("impactsValidated")
 }
 
 model Newsletter {
@@ -92,4 +110,15 @@ model Newsletter {
   date              DateTime @map("date")
 
   @@map("newsletter")
+} 
+
+model OndeFoi {
+  id                Int      @id @default(autoincrement())        
+  pin               String      @unique
+  surveyId          Int
+  locality          String
+  points            Int
+  date              DateTime @map("date")
+
+  @@map("ondefoi")
 } 

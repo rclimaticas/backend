@@ -4,6 +4,7 @@ import { UserRegisterController } from './controllers/user/user-register.control
 import { UserLoginController } from './controllers/user/user-login.controller';
 import { UserLogoutController } from './controllers/user/user-logout.controller';
 import { AuthMiddleware } from './middlewares/auth';
+import { AdminMiddleware } from './middlewares/admin.auth';
 import multer from 'multer';
 import { prisma } from './utils/prisma';
 import fs from 'fs';
@@ -20,7 +21,8 @@ import { ProfileDeleteController } from './controllers/user/profile/profile.dele
 
 import { ImpactsCreateController } from './controllers/impactos/impacts.create.controller';
 import { ImpactsListController } from './controllers/impactos/impacts.list.controller';
-import {ImpactsListGlobalController } from './controllers/impactos/impactis.list-global.controller';
+import {ImpactsListGlobalController } from './controllers/impactos/impacts.list.global.controller';
+import { ImpactsUpdateController } from './controllers/impactos/impacts.update.controller';
 
 import { NewsletterCreateController } from './controllers/newsletter/newsletter.create.controller';
 import { NewsletterListController } from './controllers/newsletter/newsletter.list.controller';
@@ -33,6 +35,9 @@ import { SofiaChatController } from './controllers/sofiachat/sofia-chat.controll
 import { GoogleLoginController } from './controllers/user/user-google-login.controller';
 
 import { MetaMaskLoginController } from './controllers/user/user-metamask.controller';
+
+import { OndeFoiCreateController } from './controllers/ondefoi/ondefoi.create.controller';
+import { OndeFoiListController } from './controllers/ondefoi/ondefoi.list.controller';
 
 // Multer configuration
 const upload = multer();
@@ -57,6 +62,7 @@ const profileDeleteController = new ProfileDeleteController();
 const impactsCreateController = new ImpactsCreateController();
 const impactsListController = new ImpactsListController();
 const impactsListGlobalController = new ImpactsListGlobalController();
+const impactsUpdateController = new ImpactsUpdateController();
 
 // Newsletter controllers
 const newsletterCreateController = new NewsletterCreateController();
@@ -75,9 +81,14 @@ const googleLoginController = new GoogleLoginController();
 // Meta Mask Login Auth
 const metaMaskLoginController = new MetaMaskLoginController();
 
+// Onde Foi controllers
+const ondefoiCreateController = new OndeFoiCreateController();
+const ondefoiListController = new OndeFoiListController();
+
 export const router = Router();
 
 router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 
 router.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
@@ -89,8 +100,6 @@ router.post("/register", registerController.store);
 router.post("/login", loginController.authenticate);
 router.post("/logout", logoutController.logout);
 
-
-const __dirname = path.resolve();
 
 router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
@@ -140,7 +149,8 @@ router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
 // Impacts routes
 router.post("/impacts", AuthMiddleware, impactsCreateController.store);
 router.get("/impacts/user", AuthMiddleware, impactsListController.index);
-router.get("/impacts", impactsListGlobalController.index)
+router.get("/impacts", AuthMiddleware, AdminMiddleware, impactsListGlobalController.index)
+router.put("/impacts/:id", AuthMiddleware, AdminMiddleware, impactsUpdateController.update);
 
 // Newsletter routes
 router.post("/newsletter", newsletterCreateController.store)
@@ -159,6 +169,10 @@ router.post("/auth/google", googleLoginController.authenticate);
 // Meta Mask Auth
 router.post("/auth/metamask", metaMaskLoginController.authenticate);
 
+// Onde Foi routes
+router.post("/ondefoi", ondefoiCreateController.store);
+router.get("/ondefoi/list", ondefoiListController.index);
+
 router.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
 });
@@ -166,3 +180,5 @@ router.get('/health', (req, res) => {
 router.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 }); 
+
+

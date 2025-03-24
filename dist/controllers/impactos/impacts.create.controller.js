@@ -50,7 +50,7 @@ class ImpactsCreateController {
         try {
             const decoded = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY);
             const userId = decoded.id;
-            const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution } = req.body;
+            const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution, validated } = req.body;
             const newImpact = await prisma_1.prisma.impacts.create({
                 data: {
                     subject,
@@ -61,6 +61,7 @@ class ImpactsCreateController {
                     biomes,
                     situation,
                     contribution,
+                    validated,
                     date: new Date(),
                     userId
                 },
@@ -86,12 +87,9 @@ class ImpactsCreateController {
             // if (!neighborsToNotify || neighborsToNotify.length === 0) {
             //     return res.status(404).json({ error: "Nenhum usuário para notificar." });
             // }
-            const RECIPIENT_EMAILS = [
-                "vitor@ligacolaborativa.site",
-                "rafael.freire@espiralds.com",
-                "santospassos.adv@gmail.com",
-                "liga@ligacolaborativa.site",
-            ];
+            const RECIPIENT_EMAILS = process.env.AUTHORIZED_EMAILS
+                ? process.env.AUTHORIZED_EMAILS.split(",")
+                : [];
             const transporter = nodemailer.createTransport({
                 host: 'mail.privateemail.com',
                 port: 465,

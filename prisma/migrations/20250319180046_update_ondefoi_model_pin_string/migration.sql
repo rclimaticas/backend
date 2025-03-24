@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "ondefoi" ALTER COLUMN "pin" SET DATA TYPE TEXT;
