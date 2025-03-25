@@ -62,12 +62,10 @@ const axios_1 = __importDefault(require("axios"));
 dotenv_1.default.config();
 class GoogleLoginController {
     constructor() {
-        this.authorizedEmails = [
-            "vitor@ligacolaborativa.site",
-            "rafael.freire@espiralds.com",
-            "santospassos.adv@gmail.com",
-            "liga@ligacolaborativa.site",
-        ];
+        this.authorizedEmails = process.env.AUTHORIZED_EMAILS
+            ? process.env.AUTHORIZED_EMAILS.split(",")
+            : [];
+        this.authenticate = this.authenticate.bind(this);
     }
     async authenticate(req, res) {
         const { tokenGoogle } = req.body;
@@ -90,8 +88,8 @@ class GoogleLoginController {
                     },
                 });
             }
-            const ligador = this.authorizedEmails.includes(email) ? 1 : 0;
-            const token = jsonwebtoken_1.default.sign({ id: user.id, ligador }, process.env.SECRET_KEY, { expiresIn: "1d" });
+            const role = this.authorizedEmails.includes(email) ? 'admin' : 'user';
+            const token = jsonwebtoken_1.default.sign({ id: user.id, role: role }, process.env.SECRET_KEY, { expiresIn: "1d" });
             res.cookie('authToken', token, {
                 httpOnly: true,
                 secure: true,
@@ -101,7 +99,7 @@ class GoogleLoginController {
             const userWithToken = {
                 ...user,
                 token,
-                ligador,
+                role,
             };
             console.log(userWithToken);
             return res.json({

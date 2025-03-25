@@ -76,13 +76,13 @@ import axios from "axios";
 dotenv.config();
 
 export class GoogleLoginController {
-  private authorizedEmails: string[] = [
-    "vitor@ligacolaborativa.site",
-    "rafael.freire@espiralds.com",
-    "santospassos.adv@gmail.com",
-    "liga@ligacolaborativa.site",
-  ];
+  private authorizedEmails: string[] = process.env.AUTHORIZED_EMAILS
+    ? process.env.AUTHORIZED_EMAILS.split(",")
+    : [];
 
+  constructor() {
+    this.authenticate = this.authenticate.bind(this);
+  }
   async authenticate(req: Request, res: Response) {
     const { tokenGoogle } = req.body;
 
@@ -113,10 +113,10 @@ export class GoogleLoginController {
         });
       }
 
-      const ligador = this.authorizedEmails.includes(email) ? 1 : 0;
+      const role = this.authorizedEmails.includes(email) ? 'admin' : 'user';
 
       const token = jwt.sign(
-        { id: user.id, ligador },
+        { id: user.id, role: role },
         process.env.SECRET_KEY as string,
         { expiresIn: "1d" }
       );
@@ -131,7 +131,7 @@ export class GoogleLoginController {
       const userWithToken = {
         ...user,
         token,
-        ligador,
+        role,
       };
 
       console.log(userWithToken);
